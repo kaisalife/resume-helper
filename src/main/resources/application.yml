@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: resume-helper
+  datasource:
+    url: jdbc:mysql://localhost:3306/resume_helper?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 987987987
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate-ddl: false     # 禁用DDL生成
+  ai:
+    openai:
+      api-key: sk-uikoukwhvwcdqpnaipppspakkomqzcvpnowyplkevoymhkyz  # 缩进2空格
+      base-url: https://api.siliconflow.cn # 缩进2空格
+      chat:
+        options:
+          model: Qwen/Qwen3-8B
+server:
+  port: 8080
+jwt:
+  secret: fG9jT3l4V3N6VTVnTjRrZ1JtWk5mR1lqWlpjT1F6V25hS2l3a2tUaGtHWHFwV1E=
+  expiration:  604800000
+logging:
+  level:
+    root: info
+    com.springboot.resumehelper: debug
