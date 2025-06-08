@@ -74,15 +74,20 @@ const submitForm = async () => {
   if (isRegister.value) {
     try {
       const response = await register(username.value, password.value);
-      if (response.success) {
-        console.log('注册成功');
-        isRegister.value = false;
-      } else {
-        errorMessage.value = `注册失败: ${response.message}`;
-        console.error('注册失败:', response.message);
-      }
+      // 后端返回的是字符串，不是对象
+      console.log('注册成功');
+      isRegister.value = false;
     } catch (error) {
-      errorMessage.value = `注册时出错: ${error.message}`;
+      if (error.response) {
+        // 从后端获取的错误响应
+        const status = error.response.status;
+        const message = error.response.data;
+        
+        errorMessage.value = `注册失败: ${message}`;
+      } else {
+        // 网络错误或其他前端错误
+        errorMessage.value = `注册时出错: ${error.message}`;
+      }
       console.error('注册时出错:', error);
     }
   } else {

@@ -17,6 +17,8 @@ public interface ResumeService {
 
     void deleteResume(Long id);
 
+    void deleteResumeByTitle(String title);
+
     byte[] generateResume(ResumeGenRequest request);
 
     Boolean updateShareStatus(String resumeTitle);

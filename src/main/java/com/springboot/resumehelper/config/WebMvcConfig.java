@@ -20,10 +20,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/api/auth/register", // 注册接口
                         "/api/auth/login",    // 登录接口
-                        "/swagger-ui/**",     // Swagger UI
-                        "/v3/api-docs/**",    // Swagger API 文档
-                        "/webjars/**",        // Webjars 资源
-                        "/static/**",
                         "/api/error"// 静态资源
                 );
     }

@@ -248,6 +248,15 @@ public class ResumeServiceImpl implements ResumeService {
         resumeRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteResumeByTitle(String title) {
+        Optional<Resume> resumeOptional = resumeRepository.findByresumeTitle(title);
+        if (resumeOptional.isPresent()) {
+            Long resumeId = resumeOptional.get().getId();
+            shareService.deleteSharePostByResumeId(resumeId);
+            resumeRepository.deleteById(resumeId);
+        }
+    }
 
     @Override
     public byte[] generateResume(ResumeGenRequest request) {

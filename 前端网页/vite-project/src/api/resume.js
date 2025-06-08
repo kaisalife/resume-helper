@@ -41,6 +41,23 @@ export const getResumes = async () => {
   }
 };
 
+// 新增的删除简历函数
+export const deleteResume = async (title) => {
+  try {
+    // 每次请求时动态获取token
+    const token = localStorage.getItem('token');
+    const response = await axios.delete(`${API_BASE_URL}/resume/${title}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error('删除简历失败:', error);
+    throw error;
+  }
+};
+
 // 新增的生成简历函数
 export const generateResume = async (resumeGenData) => {
   try {

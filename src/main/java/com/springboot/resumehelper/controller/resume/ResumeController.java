@@ -44,9 +44,9 @@ public class ResumeController {
         return ResponseEntity.ok(updatedResume);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteResume(@PathVariable Long id) {
-        resumeService.deleteResume(id);
+    @DeleteMapping("/{title}")
+    public ResponseEntity<Void> deleteResume(@PathVariable String title) {
+        resumeService.deleteResumeByTitle(title);
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/share/{resumeTitle}")

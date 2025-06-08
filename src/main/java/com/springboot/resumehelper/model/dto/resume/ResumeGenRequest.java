@@ -2,7 +2,6 @@ package com.springboot.resumehelper.model.dto.resume;
 
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,7 +14,7 @@ public class ResumeGenRequest {
     private String skills;
     private long resumeScore;
     private String resumeTitle;
-    private List<Education> education = new ArrayList<>(); // 改为education与前端一致
+    private List<Education> education;
     
     @Data
     public static class Section {
@@ -25,8 +24,8 @@ public class ResumeGenRequest {
     
     @Data
     public static class Education {
-        private String school;     // 学校
-        private String major;      // 专业及学位
-        private String time;       // 时间，与前端保持一致
+        private String school;
+        private String major;
+        private String time;
     }
 }

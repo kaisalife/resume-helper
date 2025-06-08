@@ -35,13 +35,21 @@
                 <span class="title">{{ resumeItem.resumeTitle }}</span>
                 <span class="score">{{ resumeItem.resumeScore }} 分</span>
               </div>
-              <button
-                @click="handleShareResume(resumeItem)"
-                :disabled="resumeItem.resumeScore < 90"
-                :class="['share-btn', resumeItem.isShare ? 'shared' : '']"
-              >
-                {{ resumeItem.isShare ? '取消分享' : '分享到社区' }}
-              </button>
+              <div class="resume-actions">
+                <button
+                  @click.stop="handleShareResume(resumeItem)"
+                  :disabled="resumeItem.resumeScore < 90"
+                  :class="['share-btn', resumeItem.isShare ? 'shared' : '']"
+                >
+                  {{ resumeItem.isShare ? '取消分享' : '分享到社区' }}
+                </button>
+                <button
+                  @click.stop="handleDeleteResume(resumeItem.resumeTitle)"
+                  class="delete-btn"
+                >
+                  删除
+                </button>
+              </div>
             </li>
           </ul>
         </div>
@@ -313,7 +321,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { aiCheckResume, aiSimulatePassRate } from '../api/ai.js';
-import { saveResume, generateResume, getResumes, updateResumeShareStatus } from '../api/resume.js';
+import { saveResume, generateResume, getResumes, updateResumeShareStatus, deleteResume } from '../api/resume.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -450,6 +458,17 @@ const handleShareResume = async (resumeItem) => {
   } catch (error) {
     console.error('更新分享状态失败:', error);
     errorMessage.value = '操作失败，请重试！';
+  }
+};
+
+const handleDeleteResume = async (resumeTitle) => {
+  if (confirm('确定要删除这条简历吗？')) {
+    try {
+      await deleteResume(resumeTitle);
+      fetchResumes();
+    } catch (error) {
+      console.error('删除简历时出错:', error);
+    }
   }
 };
 
@@ -718,7 +737,18 @@ const removeEducation = (index) => {
 }
 
 .delete-btn {
-  color: #ef4444;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
 }
 
 .icon {
@@ -979,6 +1009,11 @@ textarea {
 .resume-info .score {
   font-size: 14px;
   color: #6b7280;
+}
+
+.resume-actions {
+  display: flex;
+  gap: 8px;
 }
 
 .share-btn {
